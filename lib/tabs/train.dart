@@ -2,68 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:workball/components/custom_button.dart';
 import 'package:workball/components/header.dart';
 import 'package:workball/components/hello_name.dart';
-import 'package:workball/components/image_card_with_basic_footer.dart';
 import 'package:workball/components/section.dart';
 import 'package:workball/constants/constants.dart';
-import 'package:workball/models/exercise.dart';
-import 'package:workball/pages/activity_detail.dart';
 
-class Programs extends StatelessWidget {
-  String name;
+import '../constants/constants.dart';
+import '../models/exercise.dart';
+import '../pages/activity_detail.dart';
+
+class Programs extends StatefulWidget {
+  final String name;
 
   Programs(this.name);
 
-  final List<Exercise> exercises = [
-    Exercise(
-      image: 'assets/images/image001.jpg',
-      title: 'Easy Start',
-      time: '5 min',
-      difficult: 'Low',
-    ),
-    Exercise(
-      image: 'assets/images/image002.jpg',
-      title: 'Medium Start',
-      time: '10 min',
-      difficult: 'Medium',
-    ),
-    Exercise(
-      image: 'assets/images/image003.jpg',
-      title: 'Pro Start',
-      time: '25 min',
-      difficult: 'High',
-    )
-  ];
+  @override
+  _ProgramsState createState() => _ProgramsState();
+}
 
-  List<Widget> generateList(BuildContext context) {
-    List<Widget> list = [];
-    int count = 0;
-    exercises.forEach((exercise) {
-      Widget element = Container(
-        margin: EdgeInsets.only(right: 20.0),
-        child: GestureDetector(
-          child: ImageCardWithBasicFooter(
-            exercise: exercise,
-            tag: 'imageHeader$count',
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) {
-                  return ActivityDetail(
-                    exercise: exercise,
-                    tag: 'imageHeader$count',
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      );
-      list.add(element);
-      count++;
-    });
-    return list;
+class _ProgramsState extends State<Programs> {
+  bool showList;
+
+  @override
+  void initState() {
+    showList = false;
+    super.initState();
   }
 
   @override
@@ -80,36 +41,42 @@ class Programs extends StatelessWidget {
         padding: EdgeInsets.only(top: 20.0),
         child: Column(
           children: <Widget>[
-            HelloName(name),
+            HelloName(widget.name),
             Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height - 220,
               child: ListView(
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
                 children: <Widget>[
                   Section(
-                    "Molt de text",
-                    "assets/images/vel_1.png",
                     'EQUILIBRADO',
-                  ),
-                  Section(
-                    "Molt de text",
+                    "Entrenamiento enfocados en la aceleración y velocidad. "
+                        "Perfecto para comenzar a fortificar las piernas.",
                     "assets/images/vel_1.png",
-                    'VELOCIDAD EXTREMA I',
+                    Constants.eqExercises,
                   ),
                   Section(
-                    "Molt de text",
-                    "assets/images/vel_2.png",
-                    'VELOCIDAD EXTREMA II',
-                  ),
+                      'VELOCIDAD EXTREMA I',
+                      "Entrenamiento enfocados en la aceleración y velocidad. "
+                          "Perfecto para comenzar a fortificar las piernas.",
+                      "assets/images/vel_1.png",
+                      null),
                   Section(
-                    "Molt de text",
-                    "assets/images/vel_3.png",
-                    'VELOCIDAD EXTREMA III',
-                  ),
+                      'VELOCIDAD EXTREMA II',
+                      "Entrenamiento enfocado en la primera zancada,  iniciarás"
+                          "un arranque potente. ",
+                      "assets/images/vel_2.png",
+                      null),
+                  Section(
+                      'VELOCIDAD EXTREMA III',
+                      "Entrenamiento para mantener una alta velocidad  durante "
+                          "la carrera.",
+                      "assets/images/vel_3.png",
+                      null),
                 ],
               ),
             ),
-
-//            Spacer(),
+            Spacer(),
             _button(context),
           ],
         ),
@@ -136,7 +103,15 @@ class Programs extends StatelessWidget {
 
   void navigate(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Programs(name);
+      return ActivityDetail(
+          exercise: new Exercise(
+            image: 'assets/images/image003.jpg',
+            title: 'Pro Start',
+            time: '25 min',
+            reps: '0',
+            difficult: "_radioValue",
+          ),
+          tag: 'imageHeader1');
     }));
   }
 }

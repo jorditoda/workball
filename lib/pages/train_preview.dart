@@ -75,7 +75,7 @@ class _TrainPreviewState extends State<TrainPreview> {
     return RadioListTile(
       value: value,
       dense: true,
-      activeColor: Constants.grocXungu,
+      activeColor: Constants.oddYellow,
       title: Text(
         title,
         style: TextStyle(

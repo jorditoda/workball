@@ -13,7 +13,7 @@ class LineText extends StatelessWidget {
         child: new Container(
             margin: const EdgeInsets.only(right: 10.0),
             child: Divider(
-              color: Constants.grocXungu,
+              color: Constants.oddYellow,
               height: 36,
             )),
       ),
@@ -22,7 +22,7 @@ class LineText extends StatelessWidget {
         child: new Container(
             margin: const EdgeInsets.only(left: 10.0),
             child: Divider(
-              color: Constants.grocXungu,
+              color: Constants.oddYellow,
               height: 36,
             )),
       ),

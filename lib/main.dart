@@ -73,13 +73,19 @@ class _MyAppState extends State<MyApp> {
     name = prefs.getString(key) ?? "";
     key = 'position';
     position = prefs.getString(key) ?? "";
-    if (position == null || position.isEmpty || name == null || name.isEmpty) {
+    setState(() {
+      if (position == null ||
+          position.isEmpty ||
+          name == null ||
+          name.isEmpty) {
 //      _body = LandingPage();
-      _body = Tabs(position, name);
-    } else {
-      _body = Tabs(position, name);
-    }
-    zeroDay();
+        _body = Tabs(position, name);
+      } else {
+        _body = Tabs(position, name);
+      }
+      zeroDay();
+    });
+
     print('read name: $name');
     print('read position: $position');
   }

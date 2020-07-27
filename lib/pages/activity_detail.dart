@@ -3,6 +3,8 @@ import 'package:workball/components/next_step.dart';
 import 'package:workball/models/exercise.dart';
 import 'package:workball/pages/activity_timer.dart';
 
+import '../components/custom_button.dart';
+
 class ActivityDetail extends StatelessWidget {
   final String tag;
   final Exercise exercise;
@@ -163,28 +165,9 @@ class ActivityDetail extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: GestureDetector(
-        child: Container(
-          margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-          padding: EdgeInsets.all(15.0),
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(100, 140, 255, 1.0),
-              borderRadius: BorderRadius.circular(15.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromRGBO(100, 140, 255, 0.5),
-                  blurRadius: 10.0,
-                  offset: Offset(0.0, 5.0),
-                ),
-              ]),
-          child: Text(
-            'Start',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 22.0,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-            ),
-          ),
+        child: CustomButtonWidget(
+          'VAMOS',
+          textColor: Colors.white,
         ),
         onTap: () {
           Navigator.push(

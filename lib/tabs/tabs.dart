@@ -24,8 +24,8 @@ class _TabsState extends State<Tabs> {
     return Container(
       decoration: BoxDecoration(
           border: Border(
-              left: BorderSide(color: Constants.grocXungu),
-              right: BorderSide(color: Constants.grocXungu))),
+              left: BorderSide(color: Constants.oddYellow),
+              right: BorderSide(color: Constants.oddYellow))),
       child: Tab(
         icon: icon,
         text: title,
@@ -49,8 +49,8 @@ class _TabsState extends State<Tabs> {
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
               border: Border(
-                  bottom: BorderSide(color: Constants.grocXungu),
-                  top: BorderSide(color: Constants.grocXungu))),
+                  bottom: BorderSide(color: Constants.oddYellow),
+                  top: BorderSide(color: Constants.oddYellow))),
           child: TabBar(
             tabs: <Widget>[
               Tab(
@@ -67,7 +67,7 @@ class _TabsState extends State<Tabs> {
               ),
             ],
             labelPadding: EdgeInsets.all(5.0),
-            labelColor: Constants.grocXungu,
+            labelColor: Constants.oddYellow,
             unselectedLabelColor: Colors.white,
             indicatorWeight: 0.01,
           ),

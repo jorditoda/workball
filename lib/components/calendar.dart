@@ -17,14 +17,14 @@ class Calendar extends StatelessWidget {
           TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
       dayOfWeekAlignment: FractionalOffset.bottomCenter,
       dateStyle:
-          TextStyle(color: Constants.grocXungu, fontWeight: FontWeight.w400),
+          TextStyle(color: Constants.oddYellow, fontWeight: FontWeight.w400),
       dateAlignment: FractionalOffset.topCenter,
       todayDateStyle:
           TextStyle(color: Colors.white, fontWeight: FontWeight.w400),
-      todayBackgroundColor: Constants.grocXungu,
+      todayBackgroundColor: Constants.oddYellow,
       pressedDateBackgroundColor: Colors.transparent,
       pressedDateStyle:
-          TextStyle(color: Constants.grocXungu, fontWeight: FontWeight.w400),
+          TextStyle(color: Constants.oddYellow, fontWeight: FontWeight.w400),
       dateBackgroundColor: Colors.transparent,
       backgroundColor: Colors.transparent,
       dayOfWeek: ['L', 'M', 'X', 'J', 'V', 'S', 'D'],
@@ -34,6 +34,6 @@ class Calendar extends StatelessWidget {
   }
 
   int _getDurationToCenter() {
-    return DateTime.now().weekday - 7;
+    return DateTime.now().weekday % 7 - 1;
   }
 }

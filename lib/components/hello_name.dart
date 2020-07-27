@@ -22,7 +22,7 @@ class HelloName extends StatelessWidget {
         Text(
           name,
           style: TextStyle(
-              fontSize: 24, fontFamily: "Impact", color: Constants.grocXungu),
+              fontSize: 24, fontFamily: "Impact", color: Constants.oddYellow),
         ),
       ],
     ));
