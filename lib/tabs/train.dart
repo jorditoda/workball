@@ -6,8 +6,7 @@ import 'package:workball/components/section.dart';
 import 'package:workball/constants/constants.dart';
 
 import '../constants/constants.dart';
-import '../models/exercise.dart';
-import '../pages/activity_detail.dart';
+import '../pages/activity_timer.dart';
 
 class Programs extends StatefulWidget {
   final String name;
@@ -33,6 +32,7 @@ class _ProgramsState extends State<Programs> {
       backgroundColor: Constants.blackBackground,
       appBar: AppBar(
         backgroundColor: Constants.blackBackground,
+        centerTitle: true,
         title: Header(
           title: 'WB',
         ),
@@ -103,15 +103,20 @@ class _ProgramsState extends State<Programs> {
 
   void navigate(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ActivityDetail(
-          exercise: new Exercise(
-            image: 'assets/images/image003.jpg',
-            title: 'Pro Start',
-            time: '25 min',
-            reps: '0',
-            difficult: "_radioValue",
-          ),
-          tag: 'imageHeader1');
+      return ActivityTimer();
     }));
   }
+//  }  void navigate(BuildContext context) {
+//    Navigator.push(context, MaterialPageRoute(builder: (context) {
+//      return ActivityDetail(
+//          exercise: new Exercise(
+//            image: 'assets/images/image003.jpg',
+//            title: 'Pro Start',
+//            time: '25 min',
+//            reps: '0',
+//            difficult: "_radioValue",
+//          ),
+//          tag: 'imageHeader1');
+//    }));
+//  }
 }

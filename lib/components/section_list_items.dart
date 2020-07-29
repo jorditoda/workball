@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:workball/components/time_or_reps.dart';
 
 import '../models/exercise.dart';
+
+const repsAndTimeStyle = TextStyle(
+  fontSize: 20.0,
+  fontFamily: "Impact",
+  color: Colors.white,
+);
 
 class SectionList extends StatefulWidget {
   final List<Exercise> exercises;
@@ -20,10 +27,6 @@ class _SectionListState extends State<SectionList> {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 1000),
-//      margin: EdgeInsets.only(top: 15.0),
-//      height: exercises.length * 50.0,
-//      height: 50,
-//      width: MediaQuery.of(context).size.height - 20,
       child: ListView.builder(
         shrinkWrap: true,
         physics: ScrollPhysics(),
@@ -53,7 +56,7 @@ class _SectionListState extends State<SectionList> {
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.visible,
                       ),
-                      _getTimeOrReps(exercises[index]),
+                      TimeOrReps(exercises[index]),
                     ],
                   ),
                 ),
@@ -63,51 +66,5 @@ class _SectionListState extends State<SectionList> {
         },
       ),
     );
-  }
-
-  Widget _getTimeOrReps(Exercise ex) {
-    if (ex.time == "0") {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
-            "assets/images/rep.png",
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              ex.reps + ' reps',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontFamily: "Montserrat-Light",
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      );
-    } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
-            "assets/images/timer.png",
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              ex.time,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontFamily: "Montserrat-Light",
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      );
-    }
   }
 }

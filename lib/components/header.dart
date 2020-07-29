@@ -8,13 +8,10 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        alignment: Alignment.center,
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 41, color: Colors.white),
-        ),
+    return Container(
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 41, color: Colors.white),
       ),
     );
   }

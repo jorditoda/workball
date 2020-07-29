@@ -101,13 +101,6 @@ packages:
       url: "git://github.com/yangyxd/flutter_picker.git"
     source: git
     version: "1.1.5"
-  flutter_rounded_progress_bar:
-    dependency: "direct main"
-    description:
-      name: flutter_rounded_progress_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter

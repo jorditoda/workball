@@ -54,15 +54,24 @@ class _TabsState extends State<Tabs> {
           child: TabBar(
             tabs: <Widget>[
               Tab(
-                icon: Icon(Icons.explicit, size: 26.0),
+                icon: ImageIcon(
+                  AssetImage("assets/images/train.png"),
+                  size: 30,
+                ),
                 text: "ENTRENAMIENTO",
               ),
               Tab(
-                icon: Icon(Icons.restaurant_menu, size: 26.0),
+                icon: ImageIcon(
+                  AssetImage("assets/images/progress.png"),
+                  size: 30,
+                ),
                 text: "PROGRESO",
               ),
               Tab(
-                icon: Icon(Icons.insert_chart, size: 26.0),
+                icon: ImageIcon(
+                  AssetImage("assets/images/config.png"),
+                  size: 30,
+                ),
                 text: "CONFIGURACIÓN",
               ),
             ],
@@ -76,3 +85,12 @@ class _TabsState extends State<Tabs> {
     );
   }
 }
+
+/*
+
+BoxDecoration(
+                border: Border(
+                    right: BorderSide(color: Constants.oddYellow),
+                    left: BorderSide(color: Constants.oddYellow)))
+
+ */

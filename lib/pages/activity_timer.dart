@@ -2,11 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workball/components/time_or_reps.dart';
 
 import '../components/custom_button.dart';
 import '../components/header.dart';
 import '../constants/constants.dart';
 import '../models/exercise.dart';
+import 'activity_finished.dart';
+
+const TextStyle textOptionsStyle = TextStyle(
+  fontSize: 17.0,
+  fontFamily: "Impact",
+  color: Colors.white,
+);
 
 class ActivityTimer extends StatefulWidget {
   @override
@@ -14,19 +22,22 @@ class ActivityTimer extends StatefulWidget {
 }
 
 class _ActivityTimerState extends State<ActivityTimer> {
-  final String tag = 'imageHeader';
   List<Exercise> exercises = Constants.eqExercises;
   Exercise actual;
   int index;
   bool last;
   bool rest;
+  bool isPaused;
 
   Timer _timer;
+  Timer _counter;
   int _start = 10;
+  int workingTime = 0;
 
   @override
   void dispose() {
     _timer.cancel();
+    _counter.cancel();
     super.dispose();
   }
 
@@ -35,18 +46,28 @@ class _ActivityTimerState extends State<ActivityTimer> {
     index = 0;
     last = false;
     rest = true;
+    isPaused = false;
     nextExercise();
-    startTimer();
+    startCounter();
+    startTimer(null);
     super.initState();
   }
 
   void nextExercise() {
     setState(() {
-      if (index == exercises.length)
-        last = true; //posar q ja ha acabat
-      else {
+      if (index < exercises.length) {
         actual = exercises[index];
         index++;
+      }
+      if (index == exercises.length) last = true; //posar q ja ha acabat
+    });
+  }
+
+  void prevExercise() {
+    setState(() {
+      if (index > 0) {
+        index--;
+        actual = exercises[index];
       }
     });
   }
@@ -58,6 +79,7 @@ class _ActivityTimerState extends State<ActivityTimer> {
       backgroundColor: Constants.blackBackground,
       appBar: AppBar(
         backgroundColor: Constants.blackBackground,
+        centerTitle: true,
         title: Header(
           title: 'WB',
         ),
@@ -65,110 +87,61 @@ class _ActivityTimerState extends State<ActivityTimer> {
           if (!rest && index != 0)
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(
-                Icons.pause,
-                color: Colors.white,
-                size: 35.0,
-              ),
+              child: _getPausePlayButton(),
             ),
         ],
       ),
       body: Column(
         children: <Widget>[
-          Hero(
-            tag: tag,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 270,
-              child: Image.asset(
-                actual.image,
-                fit: BoxFit.fitHeight,
-              ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 270,
+            child: Image.asset(
+              actual.image,
+              fit: BoxFit.fitHeight,
             ),
           ),
           Container(
+            height: size.height - 350,
             width: size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15.0),
-                      child: Text(
-                        _getTitleText(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 42,
-                            color: Colors.white,
-                            fontFamily: "Impact"),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Text(
-                        _getSubTitleText(),
-                        style: TextStyle(
-                          fontSize: 27.0,
-                          fontFamily: "Impact",
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Text(
-                        index.toString() +
-                            ' ejercicio de ' +
-                            exercises.length.toString(),
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "Montserrat-Light",
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset(
-                          "assets/images/timer.png",
-                          fit: BoxFit.cover,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            actual.time,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontFamily: "Montserrat-Light",
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                Text(
+                  _getTitleText(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 42,
+                    color: Colors.white,
+                    fontFamily: "Impact",
+                  ),
                 ),
+                Text(
+                  _getSubTitleText(),
+                  style: TextStyle(
+                    fontSize: 27.0,
+                    fontFamily: "Impact",
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  index.toString() +
+                      ' ejercicio de ' +
+                      exercises.length.toString(),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontFamily: "Montserrat-Light",
+                    color: Colors.white,
+                  ),
+                ),
+                TimeOrReps(actual),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Spacer(),
-                    CustomButtonWidget.withWidget(
-                      _getCentralButton(),
-                      width: 125,
-                      height: 125,
-                      radius: 65,
-                    ),
-//                    Container(
-//                      width: size.width - 130.0,
-//                      height: 55.0,
-//                      decoration: BoxDecoration(
-//                        color: Color.fromRGBO(232, 242, 248, 1.0),
-//                        borderRadius: BorderRadius.circular(15.0),
-//                      ),
-//                      child: _getCentralButton(),
-//                    ),
-                    Spacer(),
+                    _getLeftButton(),
+                    _getCentralRow(),
+                    _getRightButton(),
                   ],
                 ),
               ],
@@ -183,14 +156,112 @@ class _ActivityTimerState extends State<ActivityTimer> {
     if (rest)
       return actual.title;
     else {
-      return _getTimming();
+      if (actual.time != "0") {
+        return _getTimming();
+      } else {
+        return actual.reps.toString() + ' reps';
+      }
     }
   }
 
   Widget _getCentralButton() {
+    return Padding(
+      padding: EdgeInsets.only(right: 15, left: 15),
+      child: Stack(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              CustomButtonWidget.withWidget(
+                _getCentralButtonWidget(),
+                width: 125,
+                height: 125,
+                radius: 65,
+                marginLeft: 0,
+                marginRight: 0,
+              ),
+              if (rest)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    'CUENTA ATRÁS',
+                    style: textOptionsStyle,
+                  ),
+                ),
+            ],
+          ),
+          Image.asset(
+            "assets/images/rest_bar.png",
+            alignment: Alignment.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getCentralRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        if (!rest && index != 0)
+          //previous exercise
+          InkWell(
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                  size: 40,
+                ),
+                Text(
+                  "ANTERIOR\nEJERCICIO",
+                  style: textOptionsStyle,
+                ),
+              ],
+            ),
+            onTap: () {
+              print("prevExercise");
+              _timer.cancel();
+              prevExercise();
+              setState(() {
+                rest = true;
+              });
+              startTimer(null);
+            },
+          ),
+        _getCentralButton(),
+        if (!rest && index != exercises.length)
+          //nextExercise
+          InkWell(
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "SIGUIENTE\nEJERCICIO",
+                  style: textOptionsStyle,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 40,
+                )
+              ],
+            ),
+            onTap: () {
+              print("nextExercise");
+              nextExercise();
+              setState(() {
+                rest = true;
+              });
+              startTimer(null);
+            },
+          ),
+      ],
+    );
+  }
+
+  Widget _getCentralButtonWidget() {
     if (rest)
       return Text(
-        _getTimeButton(),
+        _getTimeCentralButton(),
         style: TextStyle(
           color: Colors.white,
           fontSize: 62.0,
@@ -198,12 +269,73 @@ class _ActivityTimerState extends State<ActivityTimer> {
         ),
       );
     else {
-      return Icon(
-        Icons.check,
-        color: Colors.white,
-        size: 62,
+      return InkWell(
+        child: Icon(
+          Icons.check,
+          color: Colors.white,
+          size: 62,
+        ),
+        onTap: () {
+          print("nextExercise");
+          nextExercise();
+          setState(() {
+            rest = true;
+          });
+          startTimer(null);
+        },
       );
     }
+  }
+
+  String _getTimeCentralButton() {
+    return _getTimming().split(":")[2];
+  }
+
+  Widget _getLeftButton() {
+    if (rest) {
+      //+10"
+      return InkWell(
+        child: CustomButtonWidget(
+          "+10\"",
+          width: 90,
+          height: 60,
+          marginRight: 0,
+          marginLeft: 10,
+        ),
+        onTap: () {
+          _timer.cancel();
+          setState(() {
+            _start += 10;
+          });
+          startTimer(_start);
+        },
+      );
+    }
+    return Container();
+  }
+
+  Widget _getRightButton() {
+    if (rest) {
+      //omitir
+      return InkWell(
+        child: CustomButtonWidget(
+          "OMITIR",
+          width: 90,
+          height: 60,
+          marginLeft: 0,
+          marginRight: 10,
+        ),
+        onTap: () {
+          _timer.cancel();
+          setState(() {
+            _start = 0;
+            rest = false;
+          });
+          startTimer(null);
+        },
+      );
+    }
+    return Container();
   }
 
   String _getTimming() {
@@ -214,20 +346,58 @@ class _ActivityTimerState extends State<ActivityTimer> {
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
 
-  String _getTimeButton() {
-    return _getTimming().split(":")[2];
+  Widget _getPausePlayButton() {
+    if (isPaused) {
+      return InkWell(
+        child: Icon(
+          Icons.play_arrow,
+          color: Colors.white,
+          size: 35.0,
+        ),
+        onTap: () {
+          setState(() {
+            isPaused = !isPaused;
+            unpauseTimer();
+          });
+        },
+      );
+    } else {
+      return InkWell(
+        child: Icon(
+          Icons.pause,
+          color: Colors.white,
+          size: 35.0,
+        ),
+        onTap: () {
+          setState(() {
+            isPaused = !isPaused;
+            pauseTimer();
+          });
+        },
+      );
+    }
   }
 
-  void startTimer() {
-    if (rest) {
-      _start = 10;
-    } else {
-      List<String> timef = actual.time.split(":");
-      print(actual.time);
-      int hour = int.parse(timef[0]);
-      int minute = int.parse(timef[1]);
-      int second = int.parse(timef[2]);
-      _start = second + (60 * minute) + (3600 * hour);
+  void pauseTimer() {
+    if (_timer != null) _timer.cancel();
+  }
+
+  void unpauseTimer() => startTimer(_start);
+
+  void startTimer(int pauseTime) {
+    if (pauseTime == null) {
+      setState(() {
+        if (rest) {
+          _start = 10;
+        } else {
+          List<String> timef = actual.time.split(":");
+          print("actual time:" + actual.time);
+          int hour = int.parse(timef[0]);
+          int minute = int.parse(timef[1]);
+          int second = int.parse(timef[2]);
+          _start = second + (60 * minute) + (3600 * hour);
+        }
+      });
     }
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
@@ -236,12 +406,26 @@ class _ActivityTimerState extends State<ActivityTimer> {
         () {
           if (_start < 1) {
             timer.cancel();
+            if (last) {
+              _counter.cancel();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return ActivityFinished(workingTime, "VELOCIDAD EXTREMA I",
+                    Constants.eqExercises.length);
+              }));
+            }
+            print("rest " + rest.toString());
+            print("last " + last.toString());
+            print("actual " + actual.toString());
             if (!rest) {
               nextExercise();
             }
             rest = !rest;
-            if (!last && actual.time != "0") {
-              startTimer();
+            if (actual.time == "0") {
+              showButtonNext();
+            }
+            if ((!last && actual.time != "0") || rest) {
+              startTimer(null);
             }
           } else {
             _start = _start - 1;
@@ -250,6 +434,20 @@ class _ActivityTimerState extends State<ActivityTimer> {
       ),
     );
   }
+
+  void startCounter() {
+    const oneSec = const Duration(seconds: 1);
+    _counter = new Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+          workingTime++;
+        },
+      ),
+    );
+  }
+
+  void showButtonNext() {}
 
   String _getSubTitleText() {
     if (index == 1 && rest) {

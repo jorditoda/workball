@@ -34,6 +34,6 @@ class Calendar extends StatelessWidget {
   }
 
   int _getDurationToCenter() {
-    return DateTime.now().weekday % 7 - 1;
+    return -(DateTime.now().weekday - 1);
   }
 }

@@ -11,21 +11,22 @@ class Constants {
       time: "00:00:20",
       reps: "0",
       difficult: "eq",
-      image: 'assets/images/image007.jpg');
+      image: 'assets/images/image001.jpg');
 
   static Exercise eq2 = Exercise(
       title: "RODILLAS PARA ATRAS",
       time: "0",
       reps: "3",
       difficult: "eq",
-      image: 'assets/images/image001.jpg');
+      image: 'assets/images/image002.jpg');
 
   static Exercise eq3 = Exercise(
       title: "FLEXIONES SIN BRAZOS",
       time: "0",
       reps: "3",
       difficult: "eq",
-      image: 'assets/images/image002.jpg');
+      image: 'assets/images/image003.jpg');
 
-  static List<Exercise> eqExercises = [eq1, eq2, eq3];
+//  static List<Exercise> eqExercises = [eq1, eq2, eq3];
+  static List<Exercise> eqExercises = [eq1];
 }

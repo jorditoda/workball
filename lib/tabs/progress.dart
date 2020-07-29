@@ -1,7 +1,7 @@
 import 'package:bezier_chart/bezier_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
-import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
+//import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
+//import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:workball/components/circle_bedge.dart';
 import 'package:workball/components/header.dart';
 
@@ -118,21 +118,21 @@ class Results extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                      child: RoundedProgressBar(
-                        height: 25.0,
-                        style: RoundedProgressBarStyle(
-                          borderWidth: 0,
-                          widthShadow: 0,
-                        ),
-                        margin: EdgeInsets.only(
-                          top: 10.0,
-                          bottom: 16.0,
-                        ),
-                        borderRadius: BorderRadius.circular(24),
-                        percent: 28.0,
-                      ),
-                    ),
+//                    Container(
+//                      child: RoundedProgressBar(
+//                        height: 25.0,
+//                        style: RoundedProgressBarStyle(
+//                          borderWidth: 0,
+//                          widthShadow: 0,
+//                        ),
+//                        margin: EdgeInsets.only(
+//                          top: 10.0,
+//                          bottom: 16.0,
+//                        ),
+//                        borderRadius: BorderRadius.circular(24),
+//                        percent: 28.0,
+//                      ),
+//                    ),
                   ],
                 ),
               ),
