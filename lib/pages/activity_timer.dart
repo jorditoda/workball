@@ -311,7 +311,10 @@ class _ActivityTimerState extends State<ActivityTimer> {
         },
       );
     }
-    return Container();
+    return Container(
+      width: 90,
+      height: 60,
+    );
   }
 
   Widget _getRightButton() {
@@ -335,7 +338,10 @@ class _ActivityTimerState extends State<ActivityTimer> {
         },
       );
     }
-    return Container();
+    return Container(
+      width: 90,
+      height: 60,
+    );
   }
 
   String _getTimming() {

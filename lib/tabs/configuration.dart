@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:workball/components/header.dart';
-import 'package:workball/components/tab_view_base.dart';
 
 class Diet extends StatelessWidget {
   @override
@@ -50,22 +49,6 @@ class Diet extends StatelessWidget {
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorColor: Color.fromRGBO(215, 225, 255, 1.0),
               ),
-            ),
-            body: TabBarView(
-              children: <Widget>[
-                TabViewBase(
-                  tabName: 'Breakfast',
-                ),
-                TabViewBase(
-                  tabName: 'Lunch',
-                ),
-                TabViewBase(
-                  tabName: 'Dinner',
-                ),
-                TabViewBase(
-                  tabName: 'Snacks',
-                ),
-              ],
             ),
           ),
         ),

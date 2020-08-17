@@ -42,7 +42,7 @@ class _TabsState extends State<Tabs> {
         body: TabBarView(
           children: <Widget>[
             TrainPreview(position, name),
-            Results(),
+            Progress(),
             Diet(),
           ],
         ),

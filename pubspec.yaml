@@ -31,14 +31,15 @@ dependencies:
     git:
       url: https://github.com/mduccc/flutter_calendar_week
       ref: 0.1.0
-  shared_preferences: ^0.4.3
+  shared_preferences: ^0.5.8
+  flutter_animation_progress_bar: ^1.0.0
   flutter_picker:
     git: git://github.com/yangyxd/flutter_picker.git
 
   flutter_share: ^1.0.2+1
   screenshot: ^0.2.0
-#  path_provider: ^1.6.5
-#  path: ^1.6.4
+  #  path_provider: ^1.6.5
+  #  path: ^1.6.4
   esys_flutter_share: ^1.0.2
 
   # The following adds the Cupertino Icons font to your application.

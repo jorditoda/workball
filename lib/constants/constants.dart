@@ -29,4 +29,18 @@ class Constants {
 
 //  static List<Exercise> eqExercises = [eq1, eq2, eq3];
   static List<Exercise> eqExercises = [eq1];
+  static List<String> month = [
+    "ENERO",
+    "FEBRERO",
+    "MARZO",
+    "ABRIL",
+    "MAYO",
+    "JUNIO",
+    "JULIO",
+    "AGOSTO",
+    "SEPTIEMBRE",
+    "OCTUBRE",
+    "NOVIEMBRE",
+    "DICIEMBRE"
+  ];
 }

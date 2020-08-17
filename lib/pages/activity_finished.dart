@@ -78,7 +78,6 @@ class _ActivityFinishedState extends State<ActivityFinished> {
               ),
             ),
             Padding(
-//            padding: const EdgeInsets.only(top: 30, bottom: 30),
               padding: const EdgeInsets.only(top: 0),
               child: Text(
                 difficulty,
